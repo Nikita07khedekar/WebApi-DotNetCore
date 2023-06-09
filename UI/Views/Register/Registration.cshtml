@@ -1,0 +1,77 @@
+﻿
+@model SharedProject.RegisterViewModel;
+@{
+    ViewData["Title"] = "Registration";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registration</h1>
+  <div class="alert alert-success alert-dismissible" id="SuccessAlert" style="display:none">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> This alert box could indicate a successful or positive action.
+  </div>
+
+  <div class="alert alert-danger alert-dismissible" id="ErrorAlert" style="display:none">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Danger!</strong> This alert box could indicate a dangerous or potentially negative action.
+  </div>
+
+
+<form >
+  <div class="form-group" >
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+    
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputPassword1">Confirm Password</label>
+    <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password">
+  </div>
+  <br />
+  <button type="submit" class="btn btn-primary" id="Submit">Register</button>
+  <button type="submit" class="btn btn-primary" onclick="Myfunc()">Clcick to show alert!!</button>
+</form>
+
+@section scripts{
+
+<script>
+
+$(document).ready(function () {
+    
+            $("#Submit").click(function () {
+
+                var model1 = { Email: $("#exampleInputEmail1").val(), Password: $("#exampleInputPassword1").val(), ConfirmPassword: $("#exampleInputPassword2").val() };
+                    var test ;
+                
+                $.ajax({
+
+                    type: "POST",
+
+                    url: '@Url.Action("Save","Register")',
+
+                    dataType: "json",
+
+                   //contentType: "application/json; charset=utf-8",
+
+                    data:  {
+
+                        "model": model1
+                    }  ,
+                   success : function(data){
+                       alert('Hi This Is Alert From Success!!',data)
+                     },
+                   error: function(data){
+                          alert('Hi This Is Alert From Error!!',data);
+                      }
+
+                });
+
+            });
+        });
+
+</script>
+}
